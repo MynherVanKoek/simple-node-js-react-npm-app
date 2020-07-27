@@ -14,19 +14,21 @@ pipeline {
             steps {
                 sh 'npm install' 
                 // sh 'sudo npm install'
-            }
-        }
-        stage('Lint') {
-
-            steps{
-
                 sh "npm run lint"
                 recordIssues enabledForFailure: true, tools: esLint(pattern: '/tmp/jenkins/lint.xml')
-                // recordIssues enabledForFailure: true, tools: esLint()
-
             }
-
         }
+        // stage('Lint') {
+
+        //     steps{
+
+        //         sh "npm run lint"
+        //         recordIssues enabledForFailure: true, tools: esLint(pattern: '/tmp/jenkins/lint.xml')
+        //         // recordIssues enabledForFailure: true, tools: esLint()
+
+        //     }
+
+        // }
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
