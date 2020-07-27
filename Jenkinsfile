@@ -21,8 +21,8 @@ pipeline {
             steps{
 
                 sh "npm run lint --silent"
-                // recordIssues enabledForFailure: true, tools: esLint(pattern: '**/testresult.xml')
-                recordIssues enabledForFailure: true, tools: esLint()
+                recordIssues enabledForFailure: true, tools: esLint(pattern: '/tmp/jenkins/lint.xml')
+                // recordIssues enabledForFailure: true, tools: esLint()
 
             }
 
