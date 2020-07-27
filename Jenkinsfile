@@ -15,7 +15,8 @@ pipeline {
                 sh 'npm install' 
                 // sh 'sudo npm install'
                 sh "npm run lint"
-                recordIssues enabledForFailure: true, tool: esLint(pattern: '/tmp/jenkins/lint.xml')
+                // recordIssues enabledForFailure: true, tool: esLint(pattern: '**/lintresult.xml')
+                recordIssues enabledForFailure: true, tool: esLint()
             }
         }
         // stage('Lint') {
