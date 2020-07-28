@@ -21,7 +21,7 @@ pipeline {
                 // sh "npm run inspect:vulnerabilities"
                 // recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
 
-                dependencyCheck odcInstallation: 'dependency-check'
+                dependencyCheck odcInstallation: '5.3.2'
                 dependencyCheckPublisher pattern: ''
             }
         }
