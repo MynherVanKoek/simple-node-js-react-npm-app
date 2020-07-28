@@ -22,7 +22,7 @@ pipeline {
                 // recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
 
                 dependencyCheck odcInstallation: 'dependency-check'
-                dependencyCheckPublisher
+                dependencyCheckPublisher pattern: ''
             }
         }
         // stage('Lint') {
