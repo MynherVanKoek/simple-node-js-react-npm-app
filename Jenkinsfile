@@ -17,6 +17,8 @@ pipeline {
                 sh "npm run lint"
                 recordIssues enabledForFailure: true, tool: esLint(pattern: '**/lintresult.xml')
                 // recordIssues enabledForFailure: true, tool: esLint()
+
+                sh "npm run inspect:vulnerabilities"
                 recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
             }
         }
