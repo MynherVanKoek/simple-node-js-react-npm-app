@@ -12,12 +12,16 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint -f checkstyle -o ./lintresult.xml --fix .; exit 0",
-    "inspect:vulnerabilities": "npm audit --json > ./vulnresult.json; exit 0"
+    "inspect:lint": "eslint -f checkstyle -o ./lintresult.xml --fix .; exit 0",
+    "inspect:vulnerabilities": "npm audit --json > ./vulnresult.json; exit 0",
+    "inspect:license": "license-checker --summary --json > ./licresult.json",
+    "inspect:all": "concurrently -c \"bgBlue.bold,bgMagenta.bold,yellow\" \"npm:inspect:lint\" \"npm:inspect:vulnerabilities\" \"npm:inspect:license\""
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint-plugin-import": "^2.16.0",
+    "license-checker": "",
+    "concurrently": ""
   }
 }

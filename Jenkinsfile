@@ -14,15 +14,9 @@ pipeline {
             steps {
                 sh 'npm install' 
                 // sh 'sudo npm install'
-                sh "npm run lint"
+                sh "npm run inspect:all"
                 recordIssues enabledForFailure: true, tool: esLint(pattern: '**/lintresult.xml')
-                // recordIssues enabledForFailure: true, tool: esLint()
-
-                // sh "npm run inspect:vulnerabilities"
                 // recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
-
-                dependencyCheck additionalArguments: "--scan ${WORKSPACE} --out ./dependency-check-report.xml --format XML", odcInstallation: 'DepCheck5.3.2'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
         // stage('Lint') {
@@ -36,6 +30,12 @@ pipeline {
         //     }
 
         // }
+        stage('Dependency Check') {
+            steps {
+                dependencyCheck additionalArguments: "--scan ${WORKSPACE} --out ./dependency-check-report.xml --format XML", odcInstallation: 'DepCheck5.3.2'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
