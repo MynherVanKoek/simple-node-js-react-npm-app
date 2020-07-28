@@ -14,7 +14,7 @@
     "eject": "react-scripts eject",
     "inspect:lint": "eslint -f checkstyle -o ./lintresult.xml --fix .; exit 0",
     "inspect:vulnerabilities": "npm audit --json > ./vulnresult.json; exit 0",
-    "inspect:license": "license-checker --summary --json > ./licresult.json",
+    "inspect:license": "license-checker --csv --out ./licresult.csv",
     "inspect:all": "concurrently -c \"bgBlue.bold,bgMagenta.bold,yellow\" \"npm:inspect:lint\" \"npm:inspect:vulnerabilities\" \"npm:inspect:license\""
   },
   "devDependencies": {
