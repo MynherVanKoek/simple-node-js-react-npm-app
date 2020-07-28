@@ -18,8 +18,11 @@ pipeline {
                 recordIssues enabledForFailure: true, tool: esLint(pattern: '**/lintresult.xml')
                 // recordIssues enabledForFailure: true, tool: esLint()
 
-                sh "npm run inspect:vulnerabilities"
-                recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
+                // sh "npm run inspect:vulnerabilities"
+                // recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
+
+                dependencyCheck
+                dependencyCheckPublisher
             }
         }
         // stage('Lint') {
