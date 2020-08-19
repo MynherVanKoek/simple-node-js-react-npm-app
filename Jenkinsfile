@@ -22,7 +22,9 @@ pipeline {
         stage('Disply licenses') {
             steps {
                 sh '''
-                    git clone https://github.com/derekeder/csv-to-html-table.git
+                    git clone https://github.com/derekeder/csv-to-html-table/git.git temp
+                    mv temp/.git csv-to-html-table/.git
+                    rm -rf temp
                 '''
                 // sh '''
                 //     git clone https://github.com/derekeder/csv-to-html-table.git
