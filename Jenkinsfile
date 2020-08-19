@@ -22,7 +22,7 @@ pipeline {
         stage('Disply licenses') {
             sh '''
                 git clone https://github.com/derekeder/csv-to-html-table.git
-                cp licresult.csv csv-to-html-table/data/Health\ Clinics\ in\ Chicago.csv
+                cp licresult.csv csv-to-html-table/data/Health\\ Clinics\\ in\\ Chicago.csv
             '''
             publishHTML([
                 allowMissing: false, 
