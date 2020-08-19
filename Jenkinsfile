@@ -19,6 +19,21 @@ pipeline {
                 // recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
             }
         }
+        stage('Disply licenses') {
+            sh '''
+                git clone https://github.com/derekeder/csv-to-html-table.git
+                cp licresult.csv csv-to-html-table/data/Health\ Clinics\ in\ Chicago.csv
+            '''
+            publishHTML([
+                allowMissing: false, 
+                alwaysLinkToLastBuild: false, 
+                keepAll: false, 
+                reportDir: 'csv-to-html-table', 
+                reportFiles: 'index.html', 
+                reportName: 'Licenses', 
+                reportTitles: '']
+            )
+        }
         // stage('Lint') {
 
         //     steps{
@@ -30,23 +45,23 @@ pipeline {
         //     }
 
         // }
-        stage('Dependency Check') {
-            steps {
-                dependencyCheck additionalArguments: "--scan ${WORKSPACE} --out ./dependency-check-report.xml --format XML", odcInstallation: 'DepCheck5.3.2'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
+        // stage('Dependency Check') {
+        //     steps {
+        //         dependencyCheck additionalArguments: "--scan ${WORKSPACE} --out ./dependency-check-report.xml --format XML", odcInstallation: 'DepCheck5.3.2'
+        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        //     }
+        // }
+        // stage('Test') {
+        //     steps {
+        //         sh './jenkins/scripts/test.sh'
+        //     }
+        // }
+        // stage('Deliver') {
+        //     steps {
+        //         sh './jenkins/scripts/deliver.sh'
+        //         input message: 'Finished using the web site? (Click "Proceed" to continue)'
+        //         sh './jenkins/scripts/kill.sh'
+        //     }
+        // }
     }
 }
