@@ -23,8 +23,11 @@ pipeline {
             steps {
                 sh '''
                     git clone https://github.com/derekeder/csv-to-html-table.git
-                    cp licresult.csv csv-to-html-table/data/Health\\ Clinics\\ in\\ Chicago.csv
                 '''
+                // sh '''
+                //     git clone https://github.com/derekeder/csv-to-html-table.git
+                //     cp licresult.csv csv-to-html-table/data/Health\\ Clinics\\ in\\ Chicago.csv
+                // '''
                 publishHTML([
                     allowMissing: false, 
                     alwaysLinkToLastBuild: false, 
@@ -32,7 +35,7 @@ pipeline {
                     reportDir: 'csv-to-html-table', 
                     reportFiles: 'index.html', 
                     reportName: 'Licenses', 
-                    reportTitles: '']
+                    reportTitles: 'Licenses']
                 )
             }
         }
