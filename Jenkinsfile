@@ -19,7 +19,7 @@ pipeline {
                 // recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
             }
         }
-        stage('Disply licenses') {
+        stage('Display licenses') {
             steps {
                 sh '''cat << EOF > conversion.py
 #!/usr/bin/env python3.7
@@ -39,6 +39,7 @@ EOF
                     deactivate
                     rm -rf pyvenv
                 '''
+                archiveArtifacts artifacts: 'license_summ.xml', followSymlinks: false
                 step([$class: 'ACIPluginPublisher', name: 'license_summ.xml', shownOnProjectPage: true])
                 publishHTML([
                     allowMissing: false, 
