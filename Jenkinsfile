@@ -21,23 +21,23 @@ pipeline {
         }
         stage('Disply licenses') {
             steps {
-                sh '''
-                    git clone https://github.com/derekeder/csv-to-html-table.git temp
-                    mv temp/.git csv-to-html-table/.git
-                    rm -rf temp
+                sh '''cat << EOF > conversion.py
+                    !#/usr/bin/env python3.7
+                    import pandas as pd
+
+                    df = pd.read_csv("licresult.csv")
+                    df.to_html("licenses.html")
+                    EOF
                 '''
-                // sh '''
-                //     git clone https://github.com/derekeder/csv-to-html-table.git
-                //     cp licresult.csv csv-to-html-table/data/Health\\ Clinics\\ in\\ Chicago.csv
-                // '''
-                publishHTML([
-                    allowMissing: false, 
-                    alwaysLinkToLastBuild: false, 
-                    keepAll: false, 
-                    reportDir: 'csv-to-html-table', 
-                    reportFiles: 'index.html', 
-                    reportName: 'Licenses', 
-                    reportTitles: 'Licenses']
+                sh 'cat conversion.py'
+                // publishHTML([
+                //     allowMissing: false, 
+                //     alwaysLinkToLastBuild: false, 
+                //     keepAll: false, 
+                //     reportDir: 'csv-to-html-table', 
+                //     reportFiles: 'index.html', 
+                //     reportName: 'Licenses', 
+                //     reportTitles: 'Licenses']
                 )
             }
         }
