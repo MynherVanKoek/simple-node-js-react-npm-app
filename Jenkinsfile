@@ -29,6 +29,13 @@ df = pd.read_csv("licresult.csv")
 df.to_html("licenses.html")
 EOF
                 '''
+                sh '''
+                    python3.7 -m venv pyvenv
+                    . pyvenv/bin/activate
+                    pip install pandas
+                    python conversion.py
+                    deactivate
+                '''
                 publishHTML([
                     allowMissing: false, 
                     alwaysLinkToLastBuild: false, 
