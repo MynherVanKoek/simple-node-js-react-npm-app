@@ -29,16 +29,15 @@ df = pd.read_csv("licresult.csv")
 df.to_html("licenses.html")
 EOF
                 '''
-                sh 'cat conversion.py'
-                // publishHTML([
-                //     allowMissing: false, 
-                //     alwaysLinkToLastBuild: false, 
-                //     keepAll: false, 
-                //     reportDir: 'csv-to-html-table', 
-                //     reportFiles: 'index.html', 
-                //     reportName: 'Licenses', 
-                //     reportTitles: 'Licenses']
-                // )
+                publishHTML([
+                    allowMissing: false, 
+                    alwaysLinkToLastBuild: false, 
+                    keepAll: false, 
+                    reportDir: '.', 
+                    reportFiles: 'licenses.html', 
+                    reportName: 'Licenses', 
+                    reportTitles: 'Licenses']
+                )
             }
         }
         // stage('Lint') {
