@@ -22,12 +22,12 @@ pipeline {
         stage('Disply licenses') {
             steps {
                 sh '''cat << EOF > conversion.py
-                    !#/usr/bin/env python3.7
-                    import pandas as pd
+!#/usr/bin/env python3.7
+import pandas as pd
 
-                    df = pd.read_csv("licresult.csv")
-                    df.to_html("licenses.html")
-                    EOF
+df = pd.read_csv("licresult.csv")
+df.to_html("licenses.html")
+EOF
                 '''
                 sh 'cat conversion.py'
                 // publishHTML([
