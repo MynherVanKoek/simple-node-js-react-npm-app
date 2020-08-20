@@ -27,6 +27,8 @@ import pandas as pd
 
 df = pd.read_csv("licresult.csv")
 df.to_html("licenses.html")
+dfsumm = df.license.value_counts().to_frame()
+dfsumm.to_html("license_summ.xml")
 EOF
                 '''
                 sh '''
@@ -37,6 +39,7 @@ EOF
                     deactivate
                     rm -rf pyvenv
                 '''
+                step([$class: 'ACIPluginPublisher', name: 'license_summ.xml', shownOnProjectPage: true])
                 publishHTML([
                     allowMissing: false, 
                     alwaysLinkToLastBuild: false, 
