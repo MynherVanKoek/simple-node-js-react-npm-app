@@ -38,7 +38,7 @@ pipeline {
                 //     reportFiles: 'index.html', 
                 //     reportName: 'Licenses', 
                 //     reportTitles: 'Licenses']
-                )
+                // )
             }
         }
         // stage('Lint') {
