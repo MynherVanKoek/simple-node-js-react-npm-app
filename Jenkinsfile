@@ -31,7 +31,7 @@ def conv2xml(row):
   for idx in row.index:
     xml.append('    <td value="{}" bgcolor="white" fontcolor="black" fontattribute="normal" href="" align="center" width="200"/>'.format(row[idx]))
   xml.append('  </tr>')
-  return '\n'.join(xml)
+  return '\\n'.join(xml)
 
 
 df = pd.read_csv("licresult.csv")
@@ -40,7 +40,7 @@ dfsumm = df.license.value_counts().to_frame().reset_index()
 
 with open("license_summ.xml", "w") as file:
   print('<table sorttable="yes">', file=file)
-  print('\n'.join(dfsumm.apply(conv2xml, axis=1)), file=file)
+  print('\\n'.join(dfsumm.apply(conv2xml, axis=1)), file=file)
   print('</table>', file=file)
 EOF
                 '''
