@@ -40,7 +40,7 @@ df.to_html("licenses.html")
 dfsumm = df.license.value_counts().to_frame().reset_index()
 
 with open("license_summ.xml", "w") as file:
-  print('<?xml version="1.0" encoding="UTF-8">', file=file)
+  print('<?xml version="1.0" encoding="UTF-8"?>', file=file)
 #  print('<table sorttable="yes">', file=file)
   print('<table>', file=file)
   print('\\n'.join(dfsumm.apply(conv2xml, axis=1)), file=file)
