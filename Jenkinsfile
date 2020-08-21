@@ -29,7 +29,8 @@ import pandas as pd
 def conv2xml(row):
   xml = ['  <tr>']
   for idx in row.index:
-    xml.append('    <td value="{}" bgcolor="white" fontcolor="black" fontattribute="normal" href="" align="center" width="200"/>'.format(row[idx]))
+#    xml.append('    <td value="{}" bgcolor="white" fontcolor="black" fontattribute="normal" href="" align="center" width="200"/>'.format(row[idx]))
+    xml.append('    <td value="{}" />'.format(row[idx]))
   xml.append('  </tr>')
   return '\\n'.join(xml)
 
