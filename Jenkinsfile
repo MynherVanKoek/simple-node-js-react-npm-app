@@ -29,8 +29,7 @@ import pandas as pd
 def conv2xml(row):
   xml = ['  <tr>']
   for idx in row.index:
-#    xml.append('    <td value="{}" bgcolor="white" fontcolor="black" fontattribute="normal" href="" align="center" width="200"/>'.format(row[idx]))
-    xml.append('    <td value="{}" bgcolor="" fontcolor="" fontattribute="" href="" align="" width=""/>'.format(row[idx]))
+    xml.append('    <td value="{}" bgcolor="white" fontcolor="black" fontattribute="normal" href="" align="center" width="200"/>'.format(row[idx]))
   xml.append('  </tr>')
   return '\\n'.join(xml)
 
@@ -41,8 +40,7 @@ dfsumm = df.license.value_counts().to_frame().reset_index()
 
 with open("license_summ.xml", "w") as file:
   print('<?xml version="1.0" encoding="UTF-8"?>', file=file)
-#  print('<table sorttable="yes">', file=file)
-  print('<table>', file=file)
+  print('<table sorttable="yes">', file=file)
   print('\\n'.join(dfsumm.apply(conv2xml, axis=1)), file=file)
   print('</table>', file=file)
 EOF
