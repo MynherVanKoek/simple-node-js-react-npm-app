@@ -2,70 +2,76 @@ pipeline {
     agent any
     // agent {
     //     docker {
-    //         image 'node:6-alpine' 
-    //         args '-p 3000:3000' 
+    //         image 'node:6-alpine'
+    //         args '-p 3000:3000'
     //     }
     // }
     environment {
-        CI = 'true' 
+        CI = 'true'
     }
     stages {
-        stage('Build') { 
+        stage('Testing access to outside files') {
             steps {
-                sh 'npm install' 
-                // sh 'sudo npm install'
-                sh "npm run inspect:all"
-                recordIssues enabledForFailure: true, tool: esLint(pattern: '**/lintresult.xml')
-                // recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
+                sh "ls -l ${JENKINS_HOME}"
+                sh "ls -l ${JENKINS_HOME}/keystores"
+                sh "cp ${JENKINS_HOME}/keystores/test ."
+                sh 'cat test'
             }
         }
-        stage('Display licenses') {
-            steps {
-                sh '''cat << EOF > conversion.py
-#!/usr/bin/env python3.7
-import pandas as pd
+//         stage('Build') {
+//             steps {
+//                 sh 'npm install'
+//                 // sh 'sudo npm install'
+//                 sh 'npm run inspect:all'
+//                 recordIssues enabledForFailure: true, tool: esLint(pattern: '**/lintresult.xml')
+//                 // recordIssues enabledForFailure: true, tool: issues(pattern: '**/vulnresult.json')
+//             }
+//         }
+//         stage('Display licenses') {
+//             steps {
+//                 sh '''cat << EOF > conversion.py
+// #!/usr/bin/env python3.7
+// import pandas as pd
 
+// def conv2xml(row):
+//   xml = ['  <tr>']
+//   for idx in row.index:
+//     xml.append('    <td value="{}" bgcolor="white" fontcolor="black" fontattribute="normal" href="" align="center" width="200"/>'.format(row[idx]))
+//   xml.append('  </tr>')
+//   return '\\n'.join(xml)
 
-def conv2xml(row):
-  xml = ['  <tr>']
-  for idx in row.index:
-    xml.append('    <td value="{}" bgcolor="white" fontcolor="black" fontattribute="normal" href="" align="center" width="200"/>'.format(row[idx]))
-  xml.append('  </tr>')
-  return '\\n'.join(xml)
+// df = pd.read_csv("licresult.csv")
+// df.to_html("licenses.html")
+// dfsumm = df.license.value_counts().to_frame().reset_index()
 
-
-df = pd.read_csv("licresult.csv")
-df.to_html("licenses.html")
-dfsumm = df.license.value_counts().to_frame().reset_index()
-
-with open("license_summ.xml", "w") as file:
-  print('<?xml version="1.0" encoding="UTF-8"?>', file=file)
-  print('<table sorttable="yes">', file=file)
-  print('\\n'.join(dfsumm.apply(conv2xml, axis=1)), file=file)
-  print('</table>', file=file)
-EOF
-                '''
-                sh '''
-                    python3.7 -m venv pyvenv
-                    . pyvenv/bin/activate
-                    pip install pandas
-                    python conversion.py
-                    deactivate
-                    rm -rf pyvenv
-                '''
-                archiveArtifacts artifacts: 'license_summ.xml', followSymlinks: false
-                step([$class: 'ACIPluginPublisher', name: 'license_summ.xml', shownOnProjectPage: true])
-                publishHTML([
-                    allowMissing: false, 
-                    alwaysLinkToLastBuild: false, 
-                    keepAll: false, 
-                    reportDir: '.', 
-                    reportFiles: 'licenses.html', 
-                    reportName: 'Licenses', 
-                    reportTitles: 'Licenses']
-                )
-            }
-        }
+// with open("license_summ.xml", "w") as file:
+//   print('<?xml version="1.0" encoding="UTF-8"?>', file=file)
+//   print('<table sorttable="yes">', file=file)
+//   print('\\n'.join(dfsumm.apply(conv2xml, axis=1)), file=file)
+//   print('</table>', file=file)
+// EOF
+//                 '''
+//                 sh '''
+//                     python3.7 -m venv pyvenv
+//                     . pyvenv/bin/activate
+//                     pip install pandas
+//                     python conversion.py
+//                     deactivate
+//                     rm -rf pyvenv
+//                 '''
+//                 archiveArtifacts artifacts: 'license_summ.xml', followSymlinks: false
+//                 step([$class: 'ACIPluginPublisher', name: 'license_summ.xml', shownOnProjectPage: true])
+//                 publishHTML([
+//                     allowMissing: false,
+//                     alwaysLinkToLastBuild: false,
+//                     keepAll: false,
+//                     reportDir: '.',
+//                     reportFiles: 'licenses.html',
+//                     reportName: 'Licenses',
+//                     reportTitles: 'Licenses']
+//                 )
+//             }
+//         }
         // stage('Lint') {
 
         //     steps{
